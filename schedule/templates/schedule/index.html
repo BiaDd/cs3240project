@@ -1,30 +1,36 @@
-{% load static %}
-{% load bootstrap5 %}
-{% bootstrap_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="container-fluid p-3 bg-dark text-white text-center">
-  <h1>Welcome to your assignment scheduler</h1>
-  <p>Feel free to use it to schedule your assignments as well as other events!</p>
-</div>
+    {% load bootstrap5 %}
 
-<nav class="navbar navbar-expand-sm bg-light">
-  <div class="container-fluid">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-      <a class="nav-link" href="{% url 'schedule:assignment'  %}">Assignments</a>
-</li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 
+    {% bootstrap_messages %}
+    <title>Polls</title>
+  </head>
+  <body>
+    <div class="container-fluid p-3 bg-dark text-white text-center">
+      <h1>Welcome to your assignment scheduler</h1>
+      <p>Feel free to use it to schedule your assignments as well as other events!</p>
+    </div>
 
-
-
-<footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
-  <p>A-22 project</p>
-</footer>
-
+    <nav class="navbar navbar-expand-sm bg-light">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'schedule:assignment'  %}">Assignments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
+      <p>A-22 project</p>
+    </footer>
+  </body>
+</html>
