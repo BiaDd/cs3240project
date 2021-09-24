@@ -9,7 +9,7 @@
     {% bootstrap_javascript %}
 
     {% bootstrap_messages %}
-    <title>Dashboard</title>
+    <title>New Assignment</title>
   </head>
   <body>
     <header>
@@ -46,9 +46,33 @@
     </header>
     <section class="mt-5">
       <div class="container-fluid p-3 bg-dark text-white text-center">
-        <h1>Welcome to your assignment scheduler</h1>
-        <p>Feel free to use it to schedule your assignments as well as other events!</p>
+        <h1>Create Assignment</h1>
+        <p>Fill in the text boxes and click submit to submit a deep thought!</p>
       </div>
+      <form action="{% url 'schedule:create_assignment'%}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <fieldset>
+          {% if error_message %}
+            <div class="alert alert-danger">
+              <strong>Warning!</strong> Please fill out the text boxes.
+            </div>
+          {% endif %}
+          <label for="course">Course: </label>
+          <input id="course" type="text" name="course" maxlength="200"><br><br>
+          <label for="title">Assignment Title: </label>
+          <input id="title" type="text" name="title" maxlength="200"><br><br>
+          <label for="desc">Description: </label>
+          <input id="desc" type="text" name="desc" size="50" maxlength="2000">
+          <label for="due_date">Due Date: </label>
+          <input id="due_date" type="date" name="due_date">
+        </fieldset>
+        {% buttons %}
+          <button type="submit" class="btn btn-primary text-white" >
+            Submit
+          </button>
+          {% endbuttons %}
+      </form>
     </section>
     <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
       <p>Copyright &copy; 2021 A-22</p>
