@@ -47,7 +47,7 @@
     <section class="mt-5">
       <div class="container-fluid p-3 bg-dark text-white text-center">
         <h1>Create Assignment</h1>
-        <p>Fill in the text boxes and click submit to submit a deep thought!</p>
+        <p>fill in the text boxes and click submit to set an assignment</p>
       </div>
       <form action="{% url 'schedule:create_assignment'%}" method="post">
         {% csrf_token %}
@@ -67,12 +67,13 @@
           <label for="due_date">Due Date: </label>
           <input id="due_date" type="date" name="due_date">
         </fieldset>
-        <!--
-    {% buttons %}
-    <button type="submit" class="btn btn-primary text-white" >
-      Submit
-    </button>
-    {% endbuttons %}  This is causing some errors and i don't know why-->
+          <div>
+            <button type="submit" class="btn btn-primary text-white" >
+            Submit
+          </button>
+          </div>
+
+
       </form>
     </section>
     <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
