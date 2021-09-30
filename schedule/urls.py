@@ -6,7 +6,8 @@ from . import views
 app_name = 'schedule'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('assignment', views.AssignmentView.as_view(), name='assignment'),
-    path('assignment/list', views.AssignmentList.as_view(), name='assignmentlist'),
-    path('submit_assignment', views.submit_assignment, name='submitthought'),
+    path('assignment/form/', views.assignment_form, name='assignment_form'),
+    path('assignment/list/', views.AssignmentListView.as_view(), name='assignment_list'),
+    path('assignment/create', views.create_assignment, name='create_assignment'),
+    path('assignment/delete/<int:assignment_id>', views.delete_assignment, name='delete_assignment'),
 ]
