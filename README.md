@@ -16,4 +16,5 @@ To connect with personal machine, follow steps 4-5, create new google api, add s
 http://localhost:8000/accounts/login    - link to login, should redirect to homepage after login, can create new account (with google) or just login with admin
 http://localhost:8000/logout    - link to logout
 
+If you want to be able to login with http://localhost:8000, need to add http://localhost:8000 to the google credentials and admin page
 
