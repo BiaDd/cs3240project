@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 
 class IndexView(generic.ListView):
-    template_name = 'schedule/index.html'
+    template_name = 'index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -21,10 +21,10 @@ class IndexView(generic.ListView):
 
 
 def assignment_form(request):
-    return render(request, 'schedule/assignment_form.html')
+    return render(request, 'assignment_form.html')
 
 class AssignmentListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
+    template_name = 'assignment_list.html'
     context_object_name = 'assignment_list'
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ def create_assignment(request):
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]
         if (not course or not title or not desc or not due_date):
-            return render(request, 'schedule/detail.html', {
+            return render(request, 'detail.html', {
                 'error_message': "Please fill out the text boxes.",
             })
         Assignment.objects.create(
@@ -47,9 +47,9 @@ def create_assignment(request):
             date_created = timezone.now(),
             due_date = due_date
         )
-        return HttpResponseRedirect(reverse('schedule:assignment_list'))
+        return HttpResponseRedirect(reverse('assignment_list'))
 
 def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
-    return HttpResponseRedirect(reverse('schedule:assignment_list'))
+    return HttpResponseRedirect(reverse('assignment_list'))
