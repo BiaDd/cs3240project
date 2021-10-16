@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 
 class IndexView(generic.ListView):
-    template_name = 'index.html'
+    template_name = 'schedule/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -21,10 +21,10 @@ class IndexView(generic.ListView):
 
 
 def assignment_form(request):
-    return render(request, 'assignment_form.html')
+    return render(request, 'schedule/assignment_form.html')
 
 class AssignmentListView(generic.ListView):
-    template_name = 'assignment_list.html'
+    template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ def create_assignment(request):
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]
         if (not course or not title or not desc or not due_date):
-            return render(request, 'detail.html', {
+            return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the text boxes.",
             })
         Assignment.objects.create(
