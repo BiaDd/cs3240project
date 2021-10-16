@@ -29,7 +29,10 @@ SECRET_KEY = 'z2^_dpbpn(jm=5u5*$j(5!u(upz*)uhth&6*j^(#6t&d0=lz3p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#heroku test comment out if only trying locally
+ALLOWED_HOSTS = ['https://assignment-test-a22.herokuapp.com/']
+
+#ALLOWED_HOSTS = []
 
 
 # Application definition
