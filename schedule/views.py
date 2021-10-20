@@ -23,6 +23,10 @@ class IndexView(generic.ListView):
 def assignment_form(request):
     return render(request, 'schedule/assignment_form.html')
 
+def login(request):
+    return render(request, 'schedule/login.html')
+
+
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
@@ -47,9 +51,9 @@ def create_assignment(request):
             date_created = timezone.now(),
             due_date = due_date
         )
-        return HttpResponseRedirect(reverse('assignment_list'))
+        return HttpResponseRedirect(reverse('schedule:assignment_list'))
 
 def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
-    return HttpResponseRedirect(reverse('assignment_list'))
+    return HttpResponseRedirect(reverse('schedule:assignment_list'))
