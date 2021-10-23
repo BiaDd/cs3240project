@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils import timezone
 from django.views import generic
 from .models import Assignment
 
@@ -9,8 +10,21 @@ from django.utils import timezone
 def index(request):
     return render(request, 'schedule/index.html')
 
+class IndexView(generic.ListView):
+    template_name = 'schedule/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Assignment.objects.order_by('-due_date')[:5]
+
+
 def assignment_form(request):
     return render(request, 'schedule/assignment_form.html')
+
+def login(request):
+    return render(request, 'schedule/login.html')
+
 
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
@@ -42,4 +56,3 @@ def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
-

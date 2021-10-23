@@ -2,7 +2,7 @@ asgiref==3.4.1
 beautifulsoup4==4.10.0
 dj-database-url==0.5.0
 Django==3.2.7
-django-bootstrap-v5==1.0.5
+django-bootstrap5==2.1.2
 django-heroku==0.3.1
 django-livesync==0.5
 django-stubs==1.9.0
@@ -23,3 +23,4 @@ typing-extensions==3.10.0.2
 watchdog==2.1.5
 websocket-client==1.2.1
 whitenoise==5.3.0
+django-allauth==0.45.0

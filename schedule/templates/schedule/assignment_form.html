@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% load bootstrap5 %}
+    {% load django_bootstrap5 %}
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
@@ -16,7 +16,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Personal Scheduler</a>
-          <button class="navbar-toggler" 
+          <button class="navbar-toggler"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#navbarItems"
@@ -27,14 +27,14 @@
           <div class="collapse navbar-collapse" id="navbarItems">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" 
+                <a class="nav-link active"
                    href="{% url 'schedule:index' %}">
                   Home
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" 
-                   aria-current="page" 
+                <a class="nav-link active"
+                   aria-current="page"
                    href="{% url 'schedule:assignment_list' %}">
                   Assignments
                 </a>
@@ -47,7 +47,7 @@
     <section class="mt-5">
       <div class="container-fluid p-3 bg-dark text-white text-center">
         <h1>Create Assignment</h1>
-        <p>Fill in the text boxes and click submit to submit a deep thought!</p>
+        <p>fill in the text boxes and click submit to set an assignment</p>
       </div>
       <form action="{% url 'schedule:create_assignment'%}" method="post">
         {% csrf_token %}
@@ -67,11 +67,11 @@
           <label for="due_date">Due Date: </label>
           <input id="due_date" type="date" name="due_date">
         </fieldset>
-        {% buttons %}
-          <button type="submit" class="btn btn-primary text-white" >
+          <div>
+            <button type="submit" class="btn btn-primary text-white" >
             Submit
           </button>
-          {% endbuttons %}
+          </div>
       </form>
     </section>
     <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
