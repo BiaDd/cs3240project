@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
                  'https://assignment-test-a22.herokuapp.com/',
-                 'assignment-organizer-cs3240.herokuapp.com/']
+                 'https://assignment-organizer-cs3240.herokuapp.com/']
 
 # Application definition
 
@@ -158,7 +158,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-SITE_ID = 4
+
+SITE_ID = 6
+
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
