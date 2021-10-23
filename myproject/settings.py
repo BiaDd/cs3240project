@@ -32,8 +32,6 @@ ALLOWED_HOSTS = ['localhost',
 # Application definition
 
 INSTALLED_APPS = [
-    'schedule.apps.ScheduleConfig',
-    'bootstrap5',
     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_bootstrap5',
     'schedule.apps.ScheduleConfig',
 
     # google authentication
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -159,6 +157,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
+# This value can vary by local setup
 SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/'
