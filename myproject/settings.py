@@ -22,18 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'z2^_dpbpn(jm=5u5*$j(5!u(upz*)uhth&6*j^(#6t&d0=lz3p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
                  'https://assignment-test-a22.herokuapp.com/',
-                 'assignment-organizer-cs3240.herokuapp.com/']
+                 'https://assignment-organizer-cs3240.herokuapp.com/']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'schedule.apps.ScheduleConfig',
-    'bootstrap5',
     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_bootstrap5',
     'schedule.apps.ScheduleConfig',
 
     # google authentication
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -159,7 +157,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-SITE_ID = 4
+# This value can vary by local setup
+SITE_ID = 6
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

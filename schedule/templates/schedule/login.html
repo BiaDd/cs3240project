@@ -5,10 +5,10 @@
 {% if user.is_authenticated %}
   <p>Welcome, You are logged in as {{ user.username }}</p>
 <div>
-  <a href="#" class="btn btn-info" role="button">logout</a>
+  <a href="/logout" class="btn btn-info" role="button">logout</a>
 </div>
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
 </body>
-</html>>
+</html>
