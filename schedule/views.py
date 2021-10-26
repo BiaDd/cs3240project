@@ -10,6 +10,8 @@ from django.utils import timezone
 def index(request):
     return render(request, 'schedule/index.html')
 
+# planning to let a user see assignments in a small tab on their page, not all of them maybe just almost due ones
+# so keeping it as listView might help
 class IndexView(generic.ListView):
     template_name = 'schedule/index.html'
     context_object_name = 'latest_question_list'
@@ -18,10 +20,15 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Assignment.objects.order_by('-due_date')[:5]
 
+# homepage view
+def homepage(request):
+    return render(request, 'schedule/homepage.html')
 
+#assignment form view
 def assignment_form(request):
     return render(request, 'schedule/assignment_form.html')
 
+# view for login
 def login(request):
     return render(request, 'schedule/login.html')
 
@@ -32,6 +39,7 @@ class AssignmentListView(generic.ListView):
 
     def get_queryset(self):
         return Assignment.objects.all()
+
 
 def create_assignment(request):
     if (request.method == 'POST'):

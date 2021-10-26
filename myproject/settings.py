@@ -143,7 +143,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-SITE_ID = 6
+SITE_ID = 4 # this one works locally for me -dan
+
+#SITE_ID = 6
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
