@@ -87,22 +87,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# change this everytime for different machines/////////
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cs3240',
-        'USER': 'password',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}"""
-
-"""db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)"""
-
-# normal sqlite stuff
+# local posgresql configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -158,9 +143,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-
 SITE_ID = 6
-
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
