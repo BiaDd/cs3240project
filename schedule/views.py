@@ -32,6 +32,7 @@ def assignment_form(request):
     return render(request, 'schedule/assignment_form.html')
 
 # view for login
+# need to overide login template
 def login(request):
     return render(request, 'schedule/login.html')
 
@@ -45,9 +46,11 @@ class AssignmentListView(generic.ListView):
     context_object_name = 'assignment_list'
 
     def get_queryset(self):
-        return Assignment.objects.all()
+        return Assignment.objects.filter(user_id=self.request.user.id)
 
 
+#need to make sure login
+@login_required
 def create_assignment(request):
     if (request.method == 'POST'):
         course = request.POST["course"]
