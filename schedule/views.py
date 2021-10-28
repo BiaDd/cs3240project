@@ -5,7 +5,9 @@ from django.utils import timezone
 from django.views import generic
 from .models import Assignment
 
+from django.contrib.auth.decorators import login_required # used to redirect users to login page
 from django.utils import timezone
+
 
 def index(request):
     return render(request, 'schedule/index.html')
@@ -26,11 +28,16 @@ def homepage(request):
 
 #assignment form view
 def assignment_form(request):
+    #student .get object? get the user primary key, if not existing redirects to sign up
     return render(request, 'schedule/assignment_form.html')
 
 # view for login
 def login(request):
     return render(request, 'schedule/login.html')
+
+
+
+
 
 
 class AssignmentListView(generic.ListView):
@@ -51,7 +58,8 @@ def create_assignment(request):
             return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the text boxes.",
             })
-        Assignment.objects.create(
+        Assignment.objects.create( # when assignment is created,
+            user_id = request.user.id, # user id associated with this assignment is set to current user
             course = course,
             title = title,
             description = desc,
