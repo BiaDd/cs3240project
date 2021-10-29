@@ -64,12 +64,16 @@ class Course(models.Model):
 
 
 class Enrollment(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE) # get the user id
+    course = models.ForeignKey(Course, on_delete=models.CASCADE) # get the course id
 
+    who_enrolled = User.get_username()
     date_enrolled = models.DateTimeField('date joined', default=timezone.now())
+    # this model doesn't have a str function because the purpose
+    # it serves is to allow students and classes to be connected
 
-
+    def __str__(self):
+        return (self.who_enrolled + "joined the class")
 
 """@receiver(post_save, sender=User, dispatch_uid="create_user")
 def create_student(sender, instance, created, **kwargs):

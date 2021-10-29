@@ -14,13 +14,13 @@ class AssignmentAdmin(admin.ModelAdmin):
     fields = ['user', 'course', 'title', 'description', 'date_created', 'due_date']
 
 class CourseAdmin(admin.ModelAdmin):
-    fields = ['course_name', 'users']
+    fields = ['course_name']
 
 class EnrollAdmin(admin.ModelAdmin):
     fields = ['student', 'course', 'date_enrolled']
 
 """class StudentAdmin(admin.ModelAdmin):
-    fields = ['username', 'email']""" # might need this late
+    fields = ['username', 'email']""" # might need this later
 
 # Now register the new UserAdmin...
 #admin.site.register(Student, StudentAdmin)
