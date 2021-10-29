@@ -59,13 +59,10 @@
           </tr>
         </thead>
         <tbody>
-          {% if course_list %}
-            {% for item in course_list %}
+          {% if course_list_view %}
+            {% for item in course_list_view %}
               <tr>
-                <td>
-                  {{ item.course_name }}
-                  <a href="{% url 'schedule:delete_assignment' item.id %}">delete</a>
-                </td>
+                <td>{{ item.course_name }}</td>
               </tr>
             {% endfor %}
           {% else %}
@@ -73,7 +70,7 @@
               <td>No courses.</td>
             </tr>
           {% endif %}
-          <a href="{% url 'schedule:assignment_form' %}">Create a new course</a>
+          <a href="{% url 'course_form' %}">Create a new course</a>
         </tbody>
       </table>
     </section>

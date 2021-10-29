@@ -27,14 +27,21 @@ def homepage(request):
     return render(request, 'schedule/homepage.html')
 
 #assignment form view
+@login_required # this makes sure they are signed in
 def assignment_form(request):
     #student .get object? get the user primary key, if not existing redirects to sign up
+    # there's actually a header thing that redirects if they aren't signed up
     return render(request, 'schedule/assignment_form.html')
 
 # view for login
 # need to overide login template
 def login(request):
     return render(request, 'schedule/login.html')
+
+
+
+def course_form(request):
+    return render(request, 'schedule/course_form.html')
 
 
 class AssignmentListView(generic.ListView):
@@ -82,14 +89,14 @@ def CreateClass(request):
                 'error_message': "Please fill out the course name.",
             })
         Course.objects.create(
-            users = request.user.id,
             course_name = course_name
         )
         return HttpResponseRedirect(reverse('schedule:course_list'))
 
+
 class ClassListView(generic.ListView):
     template_name = 'schedule/course_list.html'
-    context_object_name = 'course_list'
+    context_object_name = 'course_list_view'
 
     def get_queryset(self):
         return Course.objects.all().values('course_name')

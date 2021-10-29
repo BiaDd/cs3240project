@@ -18,6 +18,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name="schedule/index.html")),
     path('accounts/', include('allauth.urls')),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('schedule/', include('schedule.urls')),
     path('admin/', admin.site.urls),
     path('course/', TemplateView.as_view(template_name="schedule/course_list.html"), name='course_list'),
+    path('course_form/', TemplateView.as_view(template_name="schedule/course_form.html"), name='course_form')
 ]
