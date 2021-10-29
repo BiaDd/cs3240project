@@ -12,8 +12,11 @@ from .models import Assignment
 class AssignmentAdmin(admin.ModelAdmin):
     fields = ['user', 'course', 'title', 'description', 'date_created', 'due_date']
 
-class StudentAdmin(admin.ModelAdmin):
-    fields = ['username', 'email',]
+class CourseAdmin(admin.ModelAdmin):
+    fields = []
+
+"""class StudentAdmin(admin.ModelAdmin):
+    fields = ['username', 'email']""" # might need this late
 
 # Now register the new UserAdmin...
 #admin.site.register(Student, StudentAdmin)

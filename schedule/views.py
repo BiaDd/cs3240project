@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from .models import Assignment
+from .models import Assignment, Course
 
 from django.contrib.auth.decorators import login_required # used to redirect users to login page
 from django.utils import timezone
@@ -35,8 +35,6 @@ def assignment_form(request):
 # need to overide login template
 def login(request):
     return render(request, 'schedule/login.html')
-
-
 
 
 
@@ -75,3 +73,25 @@ def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
+
+
+@login_required
+def CreateClass(request):
+    if (request.method == 'POST'):
+        course_name = request.POST["name"]
+        if (not course_name):
+            return render(request, 'schedule/detail.html', {
+                'error_message': "Please fill out the course name.",
+            })
+        Assignment.objects.create( # when assignment is created,
+            users = request.user.id, # user id associated with this assignment is set to current user
+            course_name = course_name
+        )
+        return HttpResponseRedirect(reverse('schedule:course_list'))
+
+class ClassListView(generic.ListView):
+    template_name = 'schedule/course_list.html'
+    context_object_name = 'course_list'
+
+    def get_queryset(self):
+        return Course.objects.all().values('course_name')
