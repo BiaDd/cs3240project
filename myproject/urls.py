@@ -24,4 +24,5 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('schedule/', include('schedule.urls')),
     path('admin/', admin.site.urls),
+    path('course/', TemplateView.as_view(template_name="schedule/course_list.html"), name='course_list'),
 ]
