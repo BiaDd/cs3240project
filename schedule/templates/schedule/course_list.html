@@ -12,7 +12,7 @@
     {% bootstrap_javascript %}
 
     {% bootstrap_messages %}
-    <title>Assignments</title>
+    <title>Courses</title>
   </head>
   <body>
     <header>
@@ -49,39 +49,31 @@
     </header>
     <section class="mt-5">
       <div class="container-fluid p-3 bg-dark text-white text-center">
-        <h1>Assignments</h1>
-        <p>These are all your assignments</p>
+        <h1>Courses</h1>
+        <p>These are all availible courses</p>
       </div>
       <table class="table">
         <thead>
           <tr>
-            <th>Course</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date Created</th>
-            <th>Due Date</th>
+            <th>Course Name</th>
           </tr>
         </thead>
         <tbody>
-          {% if assignment_list %}
-            {% for item in assignment_list %}
+          {% if course_list %}
+            {% for item in course_list %}
               <tr>
-                <td>{{ item.course }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.date_created }}</td>
                 <td>
-                  {{ item.due_date }}
+                  {{ item.course_name }}
                   <a href="{% url 'schedule:delete_assignment' item.id %}">delete</a>
                 </td>
               </tr>
             {% endfor %}
           {% else %}
             <tr>
-              <td>No assignments.</td>
+              <td>No courses.</td>
             </tr>
           {% endif %}
-          <a href="{% url 'schedule:assignment_form' %}">Create a new assignment</a>
+          <a href="{% url 'schedule:assignment_form' %}">Create a new course</a>
         </tbody>
       </table>
     </section>
