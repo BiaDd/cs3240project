@@ -51,7 +51,7 @@
         <h1>Create Assignment</h1>
         <p>fill in the text boxes and click submit to set an assignment</p>
       </div>
-      <form action="{% url 'course_form'%}" method="post">
+      <form action="{% url 'schedule:create_course'%}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <fieldset>

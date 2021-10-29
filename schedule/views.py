@@ -83,7 +83,7 @@ def delete_assignment(request, assignment_id):
 @login_required
 def CreateClass(request):
     if (request.method == 'POST'):
-        course_name = request.POST["name"]
+        course_name = request.POST["course"]
         if (not course_name):
             return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the course name.",
@@ -91,7 +91,7 @@ def CreateClass(request):
         Course.objects.create(
             course_name = course_name
         )
-        return HttpResponseRedirect(reverse('schedule:course_list'))
+        return HttpResponseRedirect(reverse('schedule:course_list_view'))
 
 
 class ClassListView(generic.ListView):
