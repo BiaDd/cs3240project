@@ -99,22 +99,22 @@ class ClassListView(generic.ListView):
 @login_required
 def Enroll(request):
     if (request.method == 'POST'):
-        course_name = request.POST["name"]
-        if (not course_name):
+        course_name = request.POST["True"] # if user decides to enroll in course
+        if (not course_name): # if doesn't decide, can't enroll
             return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the course name.",
             })
         Course.objects.create(
             users = request.user.id,
-            course_name = course_name
+            course = request.course.id
         )
         return HttpResponseRedirect(reverse('schedule:course_list'))
 
 
-# this may seem useless now, but it can show a log of users who joined the class!
+"""# this may seem useless now, but it can show a log of users who joined the class!
 class EnrollmentListView(generic.ListView):
     template_name = 'schedule/course_list.html'
-    context_object_name = 'course_list'
+    context_object_name = 'enrollment'
 
     def get_queryset(self):
-        return Course.objects.all().values('course_name')
+        return Course.objects.all()"""
