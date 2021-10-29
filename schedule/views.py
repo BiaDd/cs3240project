@@ -37,8 +37,6 @@ def login(request):
     return render(request, 'schedule/login.html')
 
 
-
-
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
@@ -83,8 +81,8 @@ def CreateClass(request):
             return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the course name.",
             })
-        Assignment.objects.create( # when assignment is created,
-            users = request.user.id, # user id associated with this assignment is set to current user
+        Course.objects.create(
+            users = request.user.id,
             course_name = course_name
         )
         return HttpResponseRedirect(reverse('schedule:course_list'))

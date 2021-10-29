@@ -55,12 +55,20 @@ class Assignment(models.Model):
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, default="class")
-    users = models.ManyToManyField(User) # might have to change this to student later
-    class Meta:
+    #users = models.ManyToManyField(User, through='Enrollment') # might have to change this to student later
+    """class Meta:
         ordering = ['course_name']
-
+    """
     def __str__(self):
         return self.course_name
+
+
+class Enrollment(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    date_enrolled = models.DateTimeField('date joined', default=timezone.now())
+
 
 
 """@receiver(post_save, sender=User, dispatch_uid="create_user")
