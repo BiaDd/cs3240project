@@ -67,7 +67,7 @@ class Enrollment(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE) # get the user id
     course = models.ForeignKey(Course, on_delete=models.CASCADE) # get the course id
 
-    who_enrolled = User.get_username()
+    who_enrolled = ""
     date_enrolled = models.DateTimeField('date joined', default=timezone.now())
     # this model doesn't have a str function because the purpose
     # it serves is to allow students and classes to be connected
