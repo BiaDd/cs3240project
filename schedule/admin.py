@@ -7,13 +7,17 @@ from django.core.exceptions import ValidationError
 
 
 #from .models import Student
-from .models import Assignment
+from .models import Assignment, Course, Enrollment
+
 
 class AssignmentAdmin(admin.ModelAdmin):
     fields = ['user', 'course', 'title', 'description', 'date_created', 'due_date']
 
 class CourseAdmin(admin.ModelAdmin):
-    fields = []
+    fields = ['course_name', 'users']
+
+class EnrollAdmin(admin.ModelAdmin):
+    fields = ['student', 'course', 'date_enrolled']
 
 """class StudentAdmin(admin.ModelAdmin):
     fields = ['username', 'email']""" # might need this late
@@ -22,3 +26,7 @@ class CourseAdmin(admin.ModelAdmin):
 #admin.site.register(Student, StudentAdmin)
 
 admin.site.register(Assignment, AssignmentAdmin) #assignments
+
+admin.site.register(Course, CourseAdmin) # courses
+
+admin.site.register(Enrollment, EnrollAdmin)
