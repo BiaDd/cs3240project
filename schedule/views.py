@@ -56,7 +56,7 @@ def create_assignment(request):
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]
         if (not course or not title or not desc or not due_date):
-            return render(request, 'schedule/detail.html', {
+            return render(request, 'schedule/assignment_form.html', {
                 'error_message': "Please fill out the text boxes.",
             })
         Assignment.objects.create( # when assignment is created,
@@ -82,7 +82,7 @@ def CreateClass(request):
         user_info = request.user
         cur_user = User.objects.get(username=user_info.username, email=user_info.email)
         if (not course_name):
-            return render(request, 'schedule/detail.html', {
+            return render(request, 'schedule/course_form.html', {
                 'error_message': "Please fill out the course name.",
             })
 
@@ -112,7 +112,7 @@ def Enroll(request):
     if (request.method == 'POST'):
         course_name = request.POST["True"] # if user decides to enroll in course
         if (not course_name): # if doesn't decide, can't enroll
-            return render(request, 'schedule/detail.html', {
+            return render(request, 'schedule/assignment_form.html', {
                 'error_message': "Please fill out the course name.",
             })
         Course.objects.create(
