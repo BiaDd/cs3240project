@@ -39,12 +39,6 @@ def assignment_form(request):
 def login(request):
     return render(request, 'schedule/login.html')
 
-
-
-def course_form(request):
-    return render(request, 'schedule/course_form.html')
-
-
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
@@ -87,14 +81,17 @@ def CreateClass(request):
         course_name = request.POST["course"]
         user_info = request.user
         cur_user = User.objects.get(username=user_info.username, email=user_info.email)
-        print('username', request.user.username)
-        print('email' + request.user.email)
         if (not course_name):
             return render(request, 'schedule/detail.html', {
                 'error_message': "Please fill out the course name.",
             })
-        new_course = Course.objects.create(course_name = course_name)
-        new_course.users.add(cur_user)
+
+        course, created = Course.objects.get_or_create(course_name=course_name)
+        course.users.add(cur_user)
+        """
+        use created variable to display whether the user signed up for an existing
+        course or created a new course
+        """
         return HttpResponseRedirect(reverse('schedule:course_list_view'))
 
 
