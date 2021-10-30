@@ -55,7 +55,8 @@ class Assignment(models.Model):
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, default="class")
-    #users = models.ManyToManyField(User, through='Enrollment') # might have to change this to student later
+    users = models.ManyToManyField(User) # might have to change this to student later
+    # users = models.ManyToManyField(User, through='Enrollment') # might have to change this to student later
     """class Meta:
         ordering = ['course_name']
     """
