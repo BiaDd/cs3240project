@@ -1,8 +1,9 @@
 import datetime
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils import timezone
-from .models import Assignment
+from .models import Assignment, Course
 
 
 class UserTest(TestCase):
@@ -54,3 +55,63 @@ class AssignmentCreationTest(TestCase):
         # Verifies that an exception occurs if a user tries to submit an assignment without logging in (we should solve this by redirecting users to log in first)
         c = Client()
         """
+
+
+# --------------------------------------------- Sprint 4 test cases
+"""def createCourse(coursetitle, user):
+    return Course.objects.create(course=coursetitle, users=user)
+
+class CourseTestCase(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        user = User.objects.create(username="testing_user")
+        user.set_password("password")
+        user.save()
+        c = Client()
+        c.login(username="testing_user", password="password")
+
+
+    def test_course_list(self):
+        response = self.client.get(reverse('course'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No course, sign up for a new course!")
+
+
+    def test_create_course(self):
+        # Enroll test
+        User = get_user_model()
+        user = User.objects.create(username="testing_user")
+        user.set_password("password")
+        user.save()
+        c = Client()
+        c.login(username="testing_user", password="password")
+
+        return createCourse(coursetitle="test_course", user=user)
+
+
+    #test to sign up for a course
+    def test_signup_course(self):
+        User = get_user_model()
+        user = User.objects.create(username="testing_user")
+        user.set_password("password")
+        user.save()
+        c = Client()
+        c.login(username="testing_user", password="password")
+        createCourse(coursetitle="test_course", user=user)
+
+        Course.users = user # not sure if this is right
+
+
+    # check to see if a signed-up student is on the roster
+    def test_user_list_in_course(self):
+        User = get_user_model()
+        user = User.objects.create(username="testing_user")
+        user.set_password("password")
+        user.save()
+        c = Client()
+        c.login(username="testing_user", password="password")
+
+        course = createCourse(coursetitle="test_course", user=user)
+
+        response = self.client.get(reverse('course:index'))"""
+
