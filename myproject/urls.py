@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
-from schedule.views import ClassListView
+from schedule.views import CourseListView, CourseFormView, CourseDetailView
 
 
 urlpatterns = [
@@ -26,6 +26,8 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('schedule/', include('schedule.urls')),
     path('admin/', admin.site.urls),
-    path('course/', ClassListView.as_view(), name='course_list'),
-    path('course_form/', TemplateView.as_view(template_name="schedule/course_form.html"), name='course_form')
+
+    path('course/', CourseListView.as_view(), name='course_list'),
+    path('course/<int:pk>', CourseDetailView.as_view(), name='course_detail'),
+    path('course/form', CourseFormView.as_view(), name='course_form'),
 ]

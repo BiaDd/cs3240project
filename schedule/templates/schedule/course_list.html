@@ -12,10 +12,10 @@
         </tr>
       </thead>
       <tbody>
-        {% if course_list_view %}
-          {% for item in course_list_view %}
+        {% if course_list %}
+          {% for course in course_list %}
             <tr >
-              <td>{{ item.course_name }}</td>
+              <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.course_name }}</a></td>
             </tr>
           {% endfor %}
         {% else %}

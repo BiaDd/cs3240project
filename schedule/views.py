@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required # used to redirect users to login page
 from django.utils import timezone
+from .forms import CourseForm
 
 
 def index(request):
@@ -22,10 +23,6 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """Return the last five published questions."""
         return Assignment.objects.order_by('-due_date')[:5]
-
-# homepage view
-def homepage(request):
-    return render(request, 'schedule/homepage.html')
 
 #assignment form view
 @login_required # this makes sure they are signed in
@@ -69,30 +66,12 @@ def delete_assignment(request, assignment_id):
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
 
+#-------------------------------------------------------------------------------
+# Course specific views
 
-@login_required
-def CreateClass(request):
-    if (request.method == 'POST'):
-        course_name = request.POST["course"]
-        user_info = request.user
-        cur_user = User.objects.get(username=user_info.username, email=user_info.email)
-        if (not course_name):
-            return render(request, 'schedule/course_form.html', {
-                'error_message': "Please fill out the course name.",
-            })
-
-        course, created = Course.objects.get_or_create(course_name=course_name)
-        course.users.add(cur_user)
-        """
-        use created variable to display whether the user signed up for an existing
-        course or created a new course
-        """
-        return HttpResponseRedirect(reverse('schedule:course_list_view'))
-
-
-class ClassListView(generic.ListView):
+class CourseListView(generic.ListView):
     template_name = 'schedule/course_list.html'
-    context_object_name = 'course_list_view'
+    context_object_name = 'course_list'
 
     def get_queryset(self):
         user_info = self.request.user
@@ -100,8 +79,28 @@ class ClassListView(generic.ListView):
 
         return cur_user.course_set.all()
 
+class CourseDetailView(generic.DetailView):
+    model = Course
+
+class CourseFormView(generic.FormView):
+    template_name = 'schedule/course_form.html'
+    form_class = CourseForm
+
+    def form_valid(self, form):
+        user_info = self.request.user
+        course_name = form.cleaned_data.get('course_name')
+        cur_user = User.objects.get(username=user_info.username, email=user_info.email)
+        print('error')
+
+        course, created = Course.objects.get_or_create(course_name=course_name)
+        course.users.add(cur_user)
+        return HttpResponseRedirect(reverse('course_list'))
+
+    def form_invalid(self, form):
+        print('error')
 
 
+"""
 @login_required
 def Enroll(request):
     if (request.method == 'POST'):
@@ -117,7 +116,7 @@ def Enroll(request):
         return HttpResponseRedirect(reverse('schedule:course_list'))
 
 
-"""# this may seem useless now, but it can show a log of users who joined the class!
+# this may seem useless now, but it can show a log of users who joined the class!
 class EnrollmentListView(generic.ListView):
     template_name = 'schedule/course_list.html'
     context_object_name = 'enrollment'
