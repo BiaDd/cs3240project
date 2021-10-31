@@ -29,5 +29,5 @@ urlpatterns = [
 
     path('course/', CourseListView.as_view(), name='course_list'),
     path('course/<int:pk>', CourseDetailView.as_view(), name='course_detail'),
-    path('course/form', CourseFormView.as_view(), name='course_form'),
+    path('course/form/', CourseFormView.as_view(), name='course_form'),
 ]
