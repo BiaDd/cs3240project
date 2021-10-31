@@ -39,7 +39,6 @@ class AssignmentCreationTest(TestCase):
 
         createAssignment(user = user, course = "test_course", title = "test_title",
                          description="test_desc", due_date = timezone.now()+datetime.timedelta(days=5))
-
         query = Assignment.objects.get(title="test_title")
         self.assertTrue(query)
 
