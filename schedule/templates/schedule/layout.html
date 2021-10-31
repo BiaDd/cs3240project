@@ -1,0 +1,76 @@
+<html lang="en">
+  <head>
+    <title>Your Workspace</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="A-22">
+    <meta name="description" content="Personal assignment and note organizer">
+    <meta name="keywords" content="organizer">
+
+    {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'schedule:index' %}">Workspace</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Navigation Toggler" >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarItems">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %} active {% endif %}" aria-current="page" href="{% url 'schedule:index' %}">
+                  Home
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {% if '/course' in request.path %} active {% endif %}"
+                   href="{% url 'course_list' %}">
+                  Course
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {% if '/assignment' in request.path %} active {% endif %}"
+                   href="{% url 'schedule:assignment_list' %}">
+                  Assignment
+                </a>
+              </li>
+
+              {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link {% if '/account' in request.path %} active {% endif %}"
+                     href="{% url 'schedule:login' %}">
+                    Login
+                  </a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link"
+                     href="{% url 'logout' %}">
+                    Logout
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    {% block content %}
+
+    {% endblock %}
+    <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
+      <p>Copyright &copy; 2021 A-22</p>
+    </footer>
+  </body>
+</html>

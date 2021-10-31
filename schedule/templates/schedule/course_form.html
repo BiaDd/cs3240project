@@ -1,77 +1,28 @@
-<!-- This is the form to create a course, same as assignment form i think-->
+{% extends 'schedule/layout.html' %}
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    {% load django_bootstrap5 %}
-
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
-    {% bootstrap_messages %}
-    <title>New Assignment</title>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Personal Scheduler</a>
-          <button class="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarItems"
-                  aria-controls="navbarItems"
-                  aria-expanded="false" aria-label="Navigation Toggler">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarItems">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active"
-                   href="{% url 'schedule:index' %}">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active"
-                   aria-current="page"
-                   href="{% url 'schedule:assignment_list' %}">
-                  Assignments
-                </a>
-              </li>
-            </ul>
+{% block content %}
+  <section class="mt-5">
+    <div class="container-fluid p-3 bg-dark text-white text-center">
+      <h1>Create Assignment</h1>
+      <p>fill in the text boxes and click submit to set an assignment</p>
+    </div>
+    <form action="{% url 'schedule:create_course'%}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <fieldset>
+        {% if error_message %}
+          <div class="alert alert-danger">
+            <strong>Warning!</strong> Please fill out the text boxes.
           </div>
-        </div>
-      </nav>
-    </header>
-    <section class="mt-5">
-      <div class="container-fluid p-3 bg-dark text-white text-center">
-        <h1>Create Assignment</h1>
-        <p>fill in the text boxes and click submit to set an assignment</p>
+        {% endif %}
+        <label for="course">Course: </label>
+        <input id="course" type="text" name="course" maxlength="200"><br><br>
+      </fieldset>
+      <div>
+        <button type="submit" class="btn btn-primary text-white" >
+          Submit
+        </button>
       </div>
-      <form action="{% url 'schedule:create_course'%}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <fieldset>
-          {% if error_message %}
-            <div class="alert alert-danger">
-              <strong>Warning!</strong> Please fill out the text boxes.
-            </div>
-          {% endif %}
-          <label for="course">Course: </label>
-          <input id="course" type="text" name="course" maxlength="200"><br><br>
-        </fieldset>
-          <div>
-            <button type="submit" class="btn btn-primary text-white" >
-            Submit
-          </button>
-          </div>
-      </form>
-    </section>
-    <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
-      <p>Copyright &copy; 2021 A-22</p>
-    </footer>
-  </body>
-</html>
+    </form>
+  </section>
+{% endblock %}
