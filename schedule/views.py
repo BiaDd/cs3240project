@@ -34,11 +34,6 @@ def assignment_form(request):
     # there's actually a header thing that redirects if they aren't signed up
     return render(request, 'schedule/assignment_form.html')
 
-# view for login
-# need to overide login template
-def login(request):
-    return render(request, 'schedule/login.html')
-
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'

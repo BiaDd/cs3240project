@@ -10,6 +10,7 @@
 
     {% load static %}
     {% load django_bootstrap5 %}
+    {% load socialaccount %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% bootstrap_messages %}
@@ -31,32 +32,31 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a class="nav-link {% if '/course' in request.path %} active {% endif %}"
-                   href="{% url 'course_list' %}">
-                  Course
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link {% if '/assignment' in request.path %} active {% endif %}"
-                   href="{% url 'schedule:assignment_list' %}">
-                  Assignment
-                </a>
-              </li>
-
-              {% if not request.user.is_authenticated %}
+              {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link {% if '/account' in request.path %} active {% endif %}"
-                     href="{% url 'schedule:login' %}">
-                    Login
+                  <a class="nav-link {% if '/course' in request.path %} active {% endif %}"
+                     href="{% url 'course_list' %}">
+                    Course
                   </a>
                 </li>
-              {% else %}
+
+                <li class="nav-item">
+                  <a class="nav-link {% if '/assignment' in request.path %} active {% endif %}"
+                     href="{% url 'schedule:assignment_list' %}">
+                    Assignment
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link"
                      href="{% url 'logout' %}">
                     Logout
+                  </a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link {% if '/account' in request.path %} active {% endif %}"
+                     href="{% provider_login_url 'google' %}">
+                    Login
                   </a>
                 </li>
               {% endif %}
