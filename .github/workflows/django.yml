@@ -26,5 +26,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+          DB: d24aap8q3nb263
+          DB_NAME: postgresql-animate-02647
+          DB_HOST: ec2-44-194-6-121.compute-1.amazonaws.com
+          DB_PORT: 5432
+          DB_USER: aanpyesuzqefgs
+          DB_PASSWORD: 7383defa0e452ffbf1844fc512136a46cb6f3e37acc25dbb029b0e10e851e7fa
       run: |
         python manage.py test
