@@ -43,7 +43,7 @@ class AssignmentCreationTest(TestCase):
         query = Assignment.objects.get(title="test_title")
         self.assertTrue(query)
 
-        
+
         """
         response = c.post('/assignment/create/', {'course':'test_course', 'title':'test_title', 'desc':'test_desc',
                                                   'due_date':timezone.now()+datetime.timedelta(days=5)},  follow=True)
