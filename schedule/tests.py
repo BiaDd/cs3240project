@@ -2,7 +2,7 @@ import datetime
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from .models import Course, Assignment
+from .models import Assignment
 
 
 class UserTest(TestCase):
@@ -18,40 +18,9 @@ class UserTest(TestCase):
         logged_in = c.login(username="testing_user", password="password")
         self.assertTrue(logged_in)
 
-
 def createAssignment(user, course, title, description,  due_date):
 
     return Assignment.objects.create(user=user, course=course, title=title, description=description, date_created=timezone.now(), due_date=due_date)
-
-class CourseTestCase(TestCase):
-    def setUp(self):
-        self.user = get_user_model().objects.create_user(username='test', email='test@testing.com', password='password')
-        self.client = Client()
-        self.client.login(username='test', password='password')
-
-    def test_create_course(self):
-        self.client.post('/course/form/', data={'course_name':'sts1500'})
-        self.client.post('/course/form/', data={'course_name':'cs3240'})
-        self.client.post('/course/form/', data={'course_name':'dracula'})
-
-        course_list = self.user.course_set.values_list('course_name', flat=True)
-        self.assertSequenceEqual(course_list, ['sts1500', 'cs3240', 'dracula'])
-
-    # def test_course_list(self):
-        # response = self.client.get('/course/')
-        # self.assertSequenceEqual()
-        # c.post('/course/test/', data={'course_name':'sts1500'})
-        # c.post('/course/test/', data={'course_name':'cs3240'})
-        # c.post('/course/test/', data={'course_name':'dracula'})
-
-    # def test_user_list_in_course(self):
-        # hi
-
-
-    # def test_signup_course(self):
-        # hi
-
-
 
 class AssignmentCreationTest(TestCase):
     def setUp(self):

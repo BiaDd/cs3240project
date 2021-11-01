@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ main, course-feature]
+    branches: [ main, course-feature, structure/course]
   pull_request:
-    branches: [ main, course-feature]
+    branches: [ main, course-feature, structure/course]
   workflow_dispatch:
 
 jobs:

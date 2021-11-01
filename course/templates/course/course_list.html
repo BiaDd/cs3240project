@@ -15,7 +15,7 @@
         {% if course_list %}
           {% for course in course_list %}
             <tr >
-              <td><a href="{% url 'course_detail' pk=course.pk %}">{{ course.course_name }}</a></td>
+              <td><a href="{% url 'course:detail' pk=course.pk %}">{{ course.course_name }}</a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -23,7 +23,7 @@
             <td>No course, sign up for a new course!</td>
           </tr>
         {% endif %}
-        <a href="{% url 'course_form' %}">Add a new course</a>
+        <a href="{% url 'course:form' %}">Add a new course</a>
       </tbody>
     </table>
   </section>

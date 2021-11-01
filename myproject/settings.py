@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_bootstrap5',
     'schedule.apps.ScheduleConfig',
+    'course.apps.CourseConfig',
 
     # google authentication
     'allauth',
@@ -121,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # google authentication section
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -141,9 +141,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-SITE_ID = 5 # this one works locally for me -dan
+# SITE_ID = 5 # this one works locally for me -dan
 
-# SITE_ID = 6
+SITE_ID = 6
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
