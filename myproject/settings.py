@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from pathlib import Path
-import dj_database_url
 import django_heroku
 import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,7 +25,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
-                 'https://assignment-test-a22.herokuapp.com/',
                  'https://assignment-organizer-cs3240.herokuapp.com/']
 
 # Application definition
@@ -42,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_bootstrap5',
     'schedule.apps.ScheduleConfig',
+    'course.apps.CourseConfig',
 
     # google authentication
     'allauth',
@@ -123,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # google authentication section
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -143,9 +141,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-SITE_ID = 5 # this one works locally for me -dan
+# SITE_ID = 5 # this one works locally for me -dan
 
-#SITE_ID = 6
+SITE_ID = 6
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -172,4 +170,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner=False)
