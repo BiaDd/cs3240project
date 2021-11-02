@@ -19,11 +19,9 @@ class UserTest(TestCase):
         logged_in = c.login(username="testing_user", password="password")
         self.assertTrue(logged_in)
 
-
 def createAssignment(user, course, title, description,  due_date):
 
     return Assignment.objects.create(user=user, course=course, title=title, description=description, date_created=timezone.now(), due_date=due_date)
-
 
 class AssignmentCreationTest(TestCase):
     def setUp(self):
@@ -115,3 +113,4 @@ class CourseTestCase(TestCase):
 
         response = self.client.get(reverse('course:index'))"""
 
+    """

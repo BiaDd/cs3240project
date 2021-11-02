@@ -3,19 +3,14 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from .models import Assignment, Course
-from django.contrib.auth.models import User
+from .models import Assignment
 
-from django.contrib.auth.decorators import login_required # used to redirect users to login page
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import CourseForm
-
 
 def index(request):
     return render(request, 'schedule/index.html')
 
-# planning to let a user see assignments in a small tab on their page, not all of them maybe just almost due ones
-# so keeping it as listView might help
 class IndexView(generic.ListView):
     template_name = 'schedule/index.html'
     context_object_name = 'latest_question_list'
@@ -24,11 +19,7 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Assignment.objects.order_by('-due_date')[:5]
 
-#assignment form view
-@login_required # this makes sure they are signed in
 def assignment_form(request):
-    #student .get object? get the user primary key, if not existing redirects to sign up
-    # there's actually a header thing that redirects if they aren't signed up
     return render(request, 'schedule/assignment_form.html')
 
 class AssignmentListView(generic.ListView):
@@ -38,9 +29,6 @@ class AssignmentListView(generic.ListView):
     def get_queryset(self):
         return Assignment.objects.filter(user_id=self.request.user.id)
 
-
-#need to make sure login
-@login_required
 def create_assignment(request):
     if (request.method == 'POST'):
         course = request.POST["course"]
@@ -59,67 +47,9 @@ def create_assignment(request):
             date_created = timezone.now(),
             due_date = due_date
         )
-        return HttpResponseRedirect(reverse('schedule:assignment_list'))
+    return HttpResponseRedirect(reverse('schedule:assignment_list'))
 
 def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
-
-#-------------------------------------------------------------------------------
-# Course specific views
-
-class CourseListView(generic.ListView):
-    template_name = 'schedule/course_list.html'
-    context_object_name = 'course_list'
-
-    def get_queryset(self):
-        user_info = self.request.user
-        cur_user = User.objects.get(username=user_info.username, email=user_info.email)
-
-        return cur_user.course_set.all()
-
-class CourseDetailView(generic.DetailView):
-    model = Course
-
-class CourseFormView(generic.FormView):
-    template_name = 'schedule/course_form.html'
-    form_class = CourseForm
-
-    def form_valid(self, form):
-        user_info = self.request.user
-        course_name = form.cleaned_data.get('course_name')
-        cur_user = User.objects.get(username=user_info.username, email=user_info.email)
-        print('error')
-
-        course, created = Course.objects.get_or_create(course_name=course_name)
-        course.users.add(cur_user)
-        return HttpResponseRedirect(reverse('course_list'))
-
-    def form_invalid(self, form):
-        print('error')
-
-
-"""
-@login_required
-def Enroll(request):
-    if (request.method == 'POST'):
-        course_name = request.POST["True"] # if user decides to enroll in course
-        if (not course_name): # if doesn't decide, can't enroll
-            return render(request, 'schedule/assignment_form.html', {
-                'error_message': "Please fill out the course name.",
-            })
-        Course.objects.create(
-            users = request.user.id,
-            course = request.course.id
-        )
-        return HttpResponseRedirect(reverse('schedule:course_list'))
-
-
-# this may seem useless now, but it can show a log of users who joined the class!
-class EnrollmentListView(generic.ListView):
-    template_name = 'schedule/course_list.html'
-    context_object_name = 'enrollment'
-
-    def get_queryset(self):
-        return Course.objects.all()"""

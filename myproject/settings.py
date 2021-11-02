@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_bootstrap5',
     'schedule.apps.ScheduleConfig',
+    'course.apps.CourseConfig',
 
     # google authentication
     'allauth',
@@ -119,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 
 # google authentication section
