@@ -21,13 +21,16 @@ class CourseListView(generic.ListView):
 class CourseDetailView(generic.DetailView):
     model = Course
 
+    def get_object(self, queryset=None):
+        return Course.objects.get(course_name=self.kwargs.get("course_name"))
+
 class CourseFormView(generic.FormView):
     template_name = 'course/course_form.html'
     form_class = CourseForm
 
     def form_valid(self, form):
         user_info = self.request.user
-        course_name = form.cleaned_data.get('course_name')
+        course_name = form.cleaned_data.get('course_name').upper()
         cur_user = User.objects.get(username=user_info.username, email=user_info.email)
 
         course, created = Course.objects.get_or_create(course_name=course_name)
