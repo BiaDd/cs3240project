@@ -2,11 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-from .models import Course
+from .models import Course, Document
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import CourseForm
+from .forms import CourseForm, DocumentUploadForm
+
 
 class CourseListView(generic.ListView):
     template_name = 'course/course_list.html'
@@ -32,3 +33,25 @@ class CourseFormView(generic.FormView):
         course, created = Course.objects.get_or_create(course_name=course_name)
         course.users.add(cur_user)
         return HttpResponseRedirect(reverse('course:list'))
+
+
+def UploadDocumentFormView(request):
+    message = 'Upload Notes!'
+    if request.method == 'POST': # if the request is POST
+        form = DocumentUploadForm(request.POST, request.FILES) # creates a document
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile']) # creates a document model
+            newdoc.save() # saves model
+            return HttpResponseRedirect(reverse('course:notes'))
+        else:
+            message = 'invalid form:'
+    else:
+        form = DocumentUploadForm()  # A empty, unbound form, if they don't post
+
+    # Load documents for the list page
+    #documents = Document.objects.filter(course=Course.objects.get_or_create(pk))
+    documents = Document.objects.all()
+
+    # Render list page with the documents and the form
+    context = {'documents': documents, 'form': form, 'message': message}
+    return render(request, 'course/course_notes.html', context)
