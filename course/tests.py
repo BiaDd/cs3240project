@@ -1,6 +1,9 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from .models import Course
+from .models import Course, Document
+from .forms import DocumentForm
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 class CourseTestCase(TestCase):
     def setUp(self):
@@ -43,3 +46,33 @@ class CourseTestCase(TestCase):
         self.client.post('/course/form', data={'course_name':'cs3240'})
         new_len = len(Course.objects.all())
         self.assertEqual(old_len, new_len)
+
+class FileUploadTestCase(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='test', email='test@testing.com',password='chonkycookies123')
+        self.client = Client()
+        self.client.login(username='test',password='chonkycookies123')
+        
+    
+    def test_upload_file(self):
+        
+        # Add in a course first
+        self.client.post('/course/form/', data={'course_name':'cs3240'})
+        course_added = Course.objects.get(course_name='CS3240')
+        
+        # Upload a pdf for the course
+    
+        self.client.post('course:upload', {'docfile' : SimpleUploadedFile('randomnotes.pdf',b'random content in pdf', content_type='application/pdf')})
+        response = self.client.get('/course/'+str(course_added.course_name)+'/notes/')
+
+        # Get the DocumentForm from the response
+        docfile_field = response.context['form']
+        doc = docfile_field.save(commit=False) # save it into a Document
+        doc.course = course_added # Make sure that Document's course field is the course that was added
+        doc.save() # save the Document
+        self.assertEqual(str(doc.course), 'CS3240') # Check to see if the Document belongs to the appropriate course
+    
+        self.assertEqual(str(doc.docfile.name), 'randomnotes.pdf') # Check to see if the pdf doc has been uploaded
+        
+
+
