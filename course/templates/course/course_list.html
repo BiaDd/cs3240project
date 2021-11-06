@@ -2,29 +2,31 @@
 
 {% block content %}
   <section>
-    <div class="container-fluid p-3 bg-dark text-white text-center">
+    <div class="container-fluid p-3 bg-dark bg-gradient text-white text-center">
       <h1>Courses</h1>
     </div>
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th>Course Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if course_list %}
-          {% for course in course_list %}
-            <tr >
-              <td><a href="{% url 'course:detail' course_name=course.course_name %}">{{ course.course_name }}</a></td>
-            </tr>
-          {% endfor %}
-        {% else %}
+    <div class="p-5 w-50">
+      <table class="table">
+        <thead>
           <tr>
-            <td>No course, sign up for a new course!</td>
+            <th>Course Name</th>
           </tr>
-        {% endif %}
-        <a href="{% url 'course:form' %}">Add a new course</a>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% if course_list %}
+            {% for course in course_list %}
+              <tr >
+                <td><a href="{% url 'course:detail' course_name=course.course_name %}">{{ course.course_name }}</a></td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td>No course, sign up for a new course!</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      <a href="{% url 'course:form' %}" class="btn btn-primary">Add a new course</a>
+    </div>
   </section>
 {% endblock %}
