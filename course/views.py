@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views import generic
-from .models import Course, Document
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils import timezone
-from .forms import CourseForm, DocumentUploadForm
+from django.views import generic
+
+from .forms import CourseForm, DocumentForm
+from .models import Course, Document
 
 
 class CourseListView(generic.ListView):
@@ -21,8 +22,14 @@ class CourseListView(generic.ListView):
 class CourseDetailView(generic.DetailView):
     model = Course
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c = get_object_or_404(Course, course_name=self.kwargs.get("course_name"))
+        context['documents'] = c.document_set.all()
+        return context
+
     def get_object(self, queryset=None):
-        return Course.objects.get(course_name=self.kwargs.get("course_name"))
+        return get_object_or_404(Course, course_name=self.kwargs.get("course_name"))
 
 class CourseFormView(generic.FormView):
     template_name = 'course/course_form.html'
@@ -38,23 +45,21 @@ class CourseFormView(generic.FormView):
         return HttpResponseRedirect(reverse('course:list'))
 
 
-def UploadDocumentFormView(request):
+def DocumentFormView(request, course_name):
     message = 'Upload Notes!'
+    course = Course.objects.get(course_name=course_name)
     if request.method == 'POST': # if the request is POST
-        form = DocumentUploadForm(request.POST, request.FILES) # creates a document
+        form = DocumentForm(request.POST, request.FILES) # creates a document
         if form.is_valid():
-            newdoc = Document(docfile=request.FILES['docfile']) # creates a document model
-            newdoc.save() # saves model
-            return HttpResponseRedirect(reverse('course:notes'))
+            doc = form.save(commit=False)
+            doc.course = course
+            doc.save()
+            return HttpResponseRedirect(reverse('course:detail', kwargs={'course_name': course_name}))
         else:
             message = 'invalid form:'
     else:
-        form = DocumentUploadForm()  # A empty, unbound form, if they don't post
-
-    # Load documents for the list page
-    #documents = Document.objects.filter(course=Course.objects.get_or_create(pk))
-    documents = Document.objects.all()
+        form = DocumentForm()  # A empty, unbound form, if they don't post
 
     # Render list page with the documents and the form
-    context = {'documents': documents, 'form': form, 'message': message}
-    return render(request, 'course/course_notes.html', context)
+    context = {'course_name': course_name, 'form': form, 'message': message}
+    return render(request, 'course/course_document_form.html', context)
