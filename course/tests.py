@@ -17,7 +17,7 @@ class CourseTestCase(TestCase):
         self.client.post('/course/form/', data={'course_name':'dracula'})
 
         course_list = self.user.course_set.values_list('course_name', flat=True)
-        self.assertSequenceEqual(course_list, ['sts1500', 'cs3240', 'dracula'])
+        self.assertSequenceEqual(course_list, ['STS1500', 'CS3240', 'DRACULA'])
 
     def test_course_list(self):
         self.client.post('/course/form/', data={'course_name':'sts1500'})
@@ -25,16 +25,16 @@ class CourseTestCase(TestCase):
         self.client.post('/course/form/', data={'course_name':'dracula'})
 
         response = self.client.get('/course/')
-        self.assertContains(response, 'sts1500')
-        self.assertContains(response, 'cs3240')
-        self.assertContains(response, 'dracula')
+        self.assertContains(response, 'STS1500')
+        self.assertContains(response, 'CS3240')
+        self.assertContains(response, 'DRACULA')
 
     def test_user_list_in_course(self):
         self.client.post('/course/form/', data={'course_name':'sts1500'})
         get_user_model().objects.create_user(username='other', email='other@testing.com', password='password')
         self.client.login(username='other', password='password')
         self.client.post('/course/form/', data={'course_name':'sts1500'})
-        course_added = Course.objects.get(course_name='sts1500')
+        course_added = Course.objects.get(course_name='STS1500')
 
         response = self.client.get('/course/' + str(course_added.pk) +'/')
         self.assertContains(response, 'test')
