@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from .models import Course, Document
 from .forms import DocumentForm
 from django.core.files.uploadedfile import SimpleUploadedFile
-
+import os
 
 class CourseTestCase(TestCase):
     def setUp(self):
@@ -61,18 +61,52 @@ class FileUploadTestCase(TestCase):
         course_added = Course.objects.get(course_name='CS3240')
         
         # Upload a pdf for the course
-    
-        self.client.post('course:upload', {'docfile' : SimpleUploadedFile('randomnotes.pdf',b'random content in pdf', content_type='application/pdf')})
-        response = self.client.get('/course/'+str(course_added.course_name)+'/notes/')
-
-        # Get the DocumentForm from the response
-        docfile_field = response.context['form']
-        doc = docfile_field.save(commit=False) # save it into a Document
-        doc.course = course_added # Make sure that Document's course field is the course that was added
-        doc.save() # save the Document
-        self.assertEqual(str(doc.course), 'CS3240') # Check to see if the Document belongs to the appropriate course
-    
-        self.assertEqual(str(doc.docfile.name), 'randomnotes.pdf') # Check to see if the pdf doc has been uploaded
         
+        pdf = SimpleUploadedFile('randomnotes.pdf',b'random content in pdf', content_type='application/pdf')
+        document = Document(course=course_added, docfile=pdf)
+      
+        document.save()
+
+        # check to see if document has been uploaded
+        self.assertEqual(str(document.filename()), pdf.name)
+
+        # check to see if document is under correct course
+        self.assertEqual(document.course, course_added)
+        os.remove(document.docfile.path) # remove file
+
+    def test_file_list(self):
+        # Add in a course first
+        self.client.post('/course/form/', data={'course_name':'cs3710'})
+        course_added1 = Course.objects.get(course_name='CS3710')
 
 
+        # Upload a pdf for the course
+        
+        pdf1 = SimpleUploadedFile('randomnotes1.pdf',b'random content in pdf', content_type='application/pdf')
+        document1 = Document(course=course_added1, docfile=pdf1)
+      
+        document1.save()
+
+        # Upload another pdf for the course
+        
+        pdf2 = SimpleUploadedFile('randomnotes2.pdf',b'random content in pdf', content_type='application/pdf')
+        document2 = Document(course=course_added1, docfile=pdf2)
+      
+        document2.save()
+
+
+        # Upload a pdf for the course
+        
+        pdf3 = SimpleUploadedFile('randomnotes3.pdf',b'random content in pdf', content_type='application/pdf')
+        document3 = Document(course=course_added1, docfile=pdf3)
+      
+        document3.save()
+
+        doclist = course_added1.document_set.values_list('docfile',flat=True)
+
+        self.assertSequenceEqual(doclist, [document1.docfile,document2.docfile,document3.docfile]) # check to see if course has the documents in its list
+    
+        # remove temporary test files
+        os.remove(document1.docfile.path)
+        os.remove(document2.docfile.path)
+        os.remove(document3.docfile.path)
