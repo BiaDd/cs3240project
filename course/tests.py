@@ -34,9 +34,8 @@ class CourseTestCase(TestCase):
         get_user_model().objects.create_user(username='other', email='other@testing.com', password='password')
         self.client.login(username='other', password='password')
         self.client.post('/course/form/', data={'course_name':'sts1500'})
-        course_added = Course.objects.get(course_name='STS1500')
 
-        response = self.client.get('/course/' + str(course_added.pk) +'/')
+        response = self.client.get('/course/STS1500/')
         self.assertContains(response, 'test')
         self.assertContains(response, 'other')
 
@@ -52,7 +51,6 @@ class FileUploadTestCase(TestCase):
         self.user = get_user_model().objects.create_user(username='test', email='test@testing.com',password='chonkycookies123')
         self.client = Client()
         self.client.login(username='test',password='chonkycookies123')
-        
     
     def test_upload_file(self):
         
