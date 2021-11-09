@@ -141,12 +141,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-# SITE_ID = 5 # this one works locally for me -dan
+#SITE_ID = 5 # this one works locally for me -dan
 
 SITE_ID = 6
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
 
 
 
@@ -168,6 +170,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+# Need the media lines to specify where Django stores files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals(), test_runner=False)
