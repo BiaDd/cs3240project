@@ -12,9 +12,14 @@ class Course(models.Model):
     def __str__(self):
         return self.course_name
 
+def upload_path(instance, filename) :
+    # dynamically create an upload path used in AWS S3
+    return instance.course.course_name + '/ ' + filename
+
 class Document(models.Model):
+    # dynamically change upload path
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
-    docfile = models.FileField(upload_to='course/documents/%Y/%m/%d') # year, month, day
+    docfile = models.FileField(upload_to=upload_path)
 
     def filename(self): # remove a full path from the filename
         return os.path.basename(self.docfile.name)

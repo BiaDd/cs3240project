@@ -30,4 +30,5 @@ urlpatterns = [
     path('course/', include('course.urls')),
     path('schedule/', include('schedule.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # need this line to go to media for files
+] 
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # need this line to go to media for files
