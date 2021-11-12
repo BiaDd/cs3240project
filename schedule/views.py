@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from .models import Assignment
+from course.models import Course
 
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -20,7 +21,7 @@ class IndexView(generic.ListView):
         return Assignment.objects.order_by('-due_date')[:5]
 
 def assignment_form(request):
-    return render(request, 'schedule/assignment_form.html')
+    return render(request, 'schedule/assignment_form.html', {'course_list': Course.objects.order_by('course_name')})
 
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
@@ -31,7 +32,7 @@ class AssignmentListView(generic.ListView):
 
 def create_assignment(request):
     if (request.method == 'POST'):
-        course = request.POST["course"]
+        course = Course.objects.get(course_name=request.POST["course"])
         title = request.POST["title"]
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]

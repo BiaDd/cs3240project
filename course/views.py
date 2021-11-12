@@ -9,6 +9,7 @@ from django.views import generic
 from .forms import CourseForm, DocumentForm
 from .models import Course, Document
 
+from schedule.models import Assignment
 
 class CourseListView(generic.ListView):
     template_name = 'course/course_list.html'
@@ -26,6 +27,7 @@ class CourseDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         c = get_object_or_404(Course, course_name=self.kwargs.get("course_name"))
         context['documents'] = c.document_set.all()
+        context['assignments'] = Assignment.objects.filter(user_id=self.request.user.id).filter(course=c)
         return context
 
     def get_object(self, queryset=None):

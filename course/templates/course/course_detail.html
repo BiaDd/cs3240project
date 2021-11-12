@@ -3,10 +3,21 @@
 {% block content %}
   <section>
     <div class="container-fluid p-3 bg-dark bg-gradient text-white text-center">
-      <h1>Students in {{ course.course_name }}</h1>
+      <h1>{{ course.course_name }}</h1>
     </div>
     <div class="p-5">
-      <h4>Students</h1>
+      <h4>Assignments</h4>
+      {% if assignments %}
+        <ul class="list-group list-group-flush mx-5 my-3 w-50">
+          {% for item in assignments %}
+            <li class="list-group-item">{{ item.title }} {{ item.due_date }}</li>
+          {% endfor %}
+
+        </ul>
+      {% else %}
+        <p>No assignments for this course</p>
+      {% endif %}
+      <h4>Students</h4>
       {% if course.users %}
         <ul class="list-group list-group-flush mx-5 my-3 w-50">
           {% for user in course.users.all %}
@@ -16,7 +27,7 @@
       {% else %}
         <p>no user signed up for this course</p>
       {% endif %}
-      <h4 class="">Documents</h1>
+      <h4 class="">Documents</h4>
       {% if documents %}
         <ul class="list-group mx-5 my-3 w-50">
           {% for doc in documents %}
@@ -26,6 +37,8 @@
       {% else %}
         <p>No document in this course</p>
       {% endif %}
+
+
 
       <div class="mt-5">
         <a href="{% url 'course:upload' course_name=course.course_name %}"

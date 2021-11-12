@@ -14,8 +14,17 @@
             <strong>Warning!</strong> Please fill out the text boxes.
           </div>
         {% endif %}
-        <label for="course">Course: </label>
-        <input id="course" type="text" name="course" maxlength="200"><br><br>
+
+
+        <select id="course" name="course" class="form-select" aria-label=".form-select-sm example">
+          <option value="" selected disabled>Select a Course</option>
+          {% for course in course_list %}
+            <option value="{{ course.course_name }}" data-type="{{ course.course_name }}">{{ course.course_name }}</option>
+          {% endfor %}
+        </select>
+
+
+
         <label for="title">Assignment Title: </label>
         <input id="title" type="text" name="title" maxlength="200"><br><br>
         <label for="desc">Description: </label>
