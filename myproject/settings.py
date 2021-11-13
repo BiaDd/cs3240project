@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cs3240',
-        'USER': 'swan',
-        'PASSWORD': 'password',
+        'NAME': 'theproject',
+        'USER': 'paolovicencio',
+        'PASSWORD': 'Smile3000',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -143,7 +143,7 @@ AUTHENTICATION_BACKENDS = [
 # This value can vary by local setup
 #SITE_ID = 5 # this one works locally for me -dan
 
-SITE_ID = 6
+SITE_ID = 5
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -178,4 +178,4 @@ MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals(), test_runner=False)
+
