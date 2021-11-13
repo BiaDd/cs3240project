@@ -24,16 +24,13 @@ def createAssignment(user, course, title, description,  due_date):
 
 class AssignmentCreationTest(TestCase):
     def setUp(self):
-        User = get_user_model()
-        user = User.objects.create(username="testing_user")
-        user.set_password("password")
-        user.save()
-        c = Client()
-        c.login(username="testing_user", password="password")
+        self.user = get_user_model().objects.create_user(username='test', email='test@testing.com', password='password')
+        self.client = Client()
+        self.client.login(username='test', password='password')
+
 
     def testCreate(self):
         # Creates a new assignment and verifies it was saved in the database
-
 
         cours = Course.objects.create(course_name='cs3240')
         self.client.post('/course/form', data={'course_name': 'cs3240'})
