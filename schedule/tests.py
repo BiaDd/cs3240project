@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .models import Assignment
-
+from course.models import Course
 
 class UserTest(TestCase):
     def setUp(self):
@@ -35,7 +35,10 @@ class AssignmentCreationTest(TestCase):
         c = Client()
         c.login(username="testing_user", password="password")
 
-        createAssignment(user = user, course = "test_course", title = "test_title",
+        cours = Course.objects.create(course_name='cs3240')
+        self.client.post('/course/form', data={'course_name': 'cs3240'})
+
+        createAssignment(user = user, course = cours, title = "test_title",
                          description="test_desc", due_date = timezone.now()+datetime.timedelta(days=5))
         query = Assignment.objects.get(title="test_title")
         self.assertTrue(query)
