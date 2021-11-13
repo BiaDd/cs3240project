@@ -24,10 +24,6 @@ def createAssignment(user, course, title, description,  due_date):
 
 class AssignmentCreationTest(TestCase):
     def setUp(self):
-        s = "do nothing"
-
-    def testCreate(self):
-        # Creates a new assignment and verifies it was saved in the database
         User = get_user_model()
         user = User.objects.create(username="testing_user")
         user.set_password("password")
@@ -35,10 +31,14 @@ class AssignmentCreationTest(TestCase):
         c = Client()
         c.login(username="testing_user", password="password")
 
+    def testCreate(self):
+        # Creates a new assignment and verifies it was saved in the database
+
+
         cours = Course.objects.create(course_name='cs3240')
         self.client.post('/course/form', data={'course_name': 'cs3240'})
 
-        createAssignment(user = user, course = cours, title = "test_title",
+        createAssignment(user = self, course = cours, title = "test_title",
                          description="test_desc", due_date = timezone.now()+datetime.timedelta(days=5))
         query = Assignment.objects.get(title="test_title")
         self.assertTrue(query)
