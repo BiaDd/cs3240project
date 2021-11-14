@@ -32,7 +32,7 @@ class AssignmentListView(generic.ListView):
 
 def create_assignment(request):
     if (request.method == 'POST'):
-        course = request.POST["course"]
+        course = Course.objects.get(course_name=request.POST["course"])
         title = request.POST["title"]
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]
