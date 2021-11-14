@@ -40,6 +40,10 @@ def create_assignment(request):
             return render(request, 'schedule/assignment_form.html', {
                 'error_message': "Please fill out the text boxes.",
             })
+        if (len(title) > 200):
+            return render(request, 'schedule/assignment_form.html', {
+                'error_message2': "Assignment title too long",
+            })
         Assignment.objects.create( # when assignment is created,
             user_id = request.user.id, # user id associated with this assignment is set to current user
             course = course,

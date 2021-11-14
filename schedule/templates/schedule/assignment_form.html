@@ -15,9 +15,14 @@
           </div>
         {% endif %}
 
+        {% if error_message2 %}
+          <div class="alert alert-danger">
+            <strong>Warning!</strong> Assignment title too long.
+          </div>
+        {% endif %}
+
 
         <select id="course" name="course" class="form-select" aria-label=".form-select-sm example">
-          <option value="" selected disabled>Select a Course</option>
           {% for course in course_list %}
             <option value="{{ course.course_name }}" data-type="{{ course.course_name }}">{{ course.course_name }}</option>
           {% endfor %}
