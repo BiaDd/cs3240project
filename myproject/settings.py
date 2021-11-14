@@ -144,7 +144,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # This value can vary by local setup
-# SITE_ID = 5 # this one works locally for me -dan
+#SITE_ID = 5 # this one works locally for me -dan
 
 SITE_ID = 6
 
