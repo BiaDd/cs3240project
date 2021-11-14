@@ -17,7 +17,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Assignment.objects.order_by('-due_date')[:5]
+        return Assignment.objects.order_by('-due_date').reverse()[:5]
 
 def assignment_form(request):
     return render(request, 'schedule/assignment_form.html')
