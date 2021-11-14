@@ -24,7 +24,6 @@ def assignment_form(request):
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
-    
     def get_queryset(self):
         order = self.request.GET.get('sort', 'title')
         return Assignment.objects.filter(user_id=self.request.user.id).order_by(order)
