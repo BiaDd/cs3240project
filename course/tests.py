@@ -70,7 +70,7 @@ class FileUploadTestCase(TestCase):
 
         # check to see if document is under correct course
         self.assertEqual(document.course, course_added)
-        os.remove(document.docfile.path) # remove file
+        #os.remove(document.docfile.path) # remove file
 
     def test_file_list(self):
         # Add in a course first
@@ -105,6 +105,6 @@ class FileUploadTestCase(TestCase):
         self.assertSequenceEqual(doclist, [document1.docfile,document2.docfile,document3.docfile]) # check to see if course has the documents in its list
     
         # remove temporary test files
-        os.remove(document1.docfile.path)
-        os.remove(document2.docfile.path)
-        os.remove(document3.docfile.path)
+        #os.remove(document1.docfile.path)
+        #os.remove(document2.docfile.path)
+        #os.remove(document3.docfile.path)

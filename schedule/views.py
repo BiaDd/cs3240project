@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -18,7 +18,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Assignment.objects.order_by('-due_date')[:5]
+        return Assignment.objects.order_by('-due_date').reverse()[:5]
 
 def assignment_form(request):
     return render(request, 'schedule/assignment_form.html', {'course_list': Course.objects.order_by('course_name')})
@@ -26,13 +26,13 @@ def assignment_form(request):
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
-
     def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id)
+        order = self.request.GET.get('sort', 'title')
+        return Assignment.objects.filter(user_id=self.request.user.id).order_by(order)
 
 def create_assignment(request):
     if (request.method == 'POST'):
-        course = Course.objects.get(course_name=request.POST["course"])
+        course = request.POST["course"]
         title = request.POST["title"]
         desc = request.POST["desc"]
         due_date = request.POST["due_date"]
@@ -54,3 +54,4 @@ def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
+
