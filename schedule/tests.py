@@ -39,7 +39,7 @@ class AssignmentCreationTest(TestCase):
         cours = Course.objects.create(course_name='cs3240')
         self.client.post('/course/form', data={'course_name': 'cs3240'})
 
-        createAssignment(user = self, course = cours, title = "test_title",
+        createAssignment(user = user, course = cours, title = "test_title",
                          description="test_desc", due_date = timezone.now()+datetime.timedelta(days=5))
         query = Assignment.objects.get(title="test_title")
         self.assertTrue(query)
