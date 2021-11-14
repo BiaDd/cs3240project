@@ -70,7 +70,7 @@ class FileUploadTestCase(TestCase):
 
         # check to see if document is under correct course
         self.assertEqual(document.course, course_added)
-        os.remove(document.docfile.path) # remove file
+        #os.remove(document.docfile.path) # remove file
 
     def test_file_list(self):
         # Add in a course first
