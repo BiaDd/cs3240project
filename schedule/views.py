@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from .models import Assignment
-from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
@@ -25,9 +24,10 @@ def assignment_form(request):
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
-
+    
     def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id)
+        order = self.request.GET.get('sort', 'title')
+        return Assignment.objects.filter(user_id=self.request.user.id).order_by(order)
 
 def create_assignment(request):
     if (request.method == 'POST'):
@@ -54,37 +54,3 @@ def delete_assignment(request, assignment_id):
     assignment.delete()
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
 
-class AssignmentDueDateListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
-    context_object_name = 'assignment_list'
-
-    def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id).order_by('due_date')
-
-class AssignmentDateCreatedListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
-    context_object_name = 'assignment_list'
-
-    def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id).order_by('date_created')
-
-class AssignmentDescListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
-    context_object_name = 'assignment_list'
-
-    def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id).order_by('description')
-
-class AssignmentTitleListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
-    context_object_name = 'assignment_list'
-
-    def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id).order_by('title')
-
-class AssignmentCourseListView(generic.ListView):
-    template_name = 'schedule/assignment_list.html'
-    context_object_name = 'assignment_list'
-
-    def get_queryset(self):
-        return Assignment.objects.filter(user_id=self.request.user.id).order_by('course')
