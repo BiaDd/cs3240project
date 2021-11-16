@@ -18,10 +18,12 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Assignment.objects.order_by('-due_date').reverse()[:5]
+        return Assignment.objects.filter(user_id=self.request.user.id).order_by('-due_date').reverse()[:5]
 
-def assignment_form(request):
-    return render(request, 'schedule/assignment_form.html', {'course_list': Course.objects.order_by('course_name')})
+def assignment_form(request): # make sure it's linked with users
+    return render(request, 'schedule/assignment_form.html',
+    {'course_list': Course.objects.filter(users=request.user).values().order_by('course_name')})
+    # filters by users and orders by course name
 
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
