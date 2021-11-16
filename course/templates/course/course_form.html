@@ -32,25 +32,13 @@
       {% csrf_token %}
       {{ form.as_p }}
 
+        <fieldset>
+        {% if error_message %}
+          <div class="alert alert-danger">
+            <strong>Warning!</strong> Please fill out the text boxes.
+          </div>
+        {% endif %}
 
-      {% comment %}
-        }{% if error_message %}
-          }  <div class="alert alert-danger">
-            }    <strong>Warning!</strong> Please fill out the course name.
-            }  </div>
-        }{% endif %}
-      {% endcomment %}
-      {% comment %}
-        }<fieldset>
-          }  {% if error_message %}
-            }    <div class="alert alert-danger">
-              }      <strong>Warning!</strong> Please fill out the text boxes.
-              }    </div>
-          }  {% endif %}
-          }  <label for="course">Course: </label>
-          }  <input id="course" type="text" name="course" maxlength="200"><br><br>
-          }</fieldset>
-      {% endcomment %}
       <button type="submit" class="btn btn-primary text-white" >
         Create
       </button>

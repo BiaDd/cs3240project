@@ -45,7 +45,7 @@ class CourseFormView(generic.FormView):
     def get_context_data(self, **kwargs):
         user_info = self.request.user
         cur_user = User.objects.get(username=user_info.username, email=user_info.email)
-        all_current_courses = cur_user.course_set.order_by('course_name')
+        all_current_courses = Course.objects.all()
         context = super().get_context_data(**kwargs)
         context['course_list'] = all_current_courses
         return context
