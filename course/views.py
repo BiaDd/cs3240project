@@ -10,7 +10,9 @@ from .forms import CourseForm, DocumentForm
 from .models import Course, Document
 
 from schedule.models import Assignment
+from django.utils.decorators import method_decorator
 
+@method_decorator(login_required, name='dispatch') # have to do this for classes
 class CourseListView(generic.ListView):
     template_name = 'course/course_list.html'
     context_object_name = 'course_list'
@@ -20,6 +22,7 @@ class CourseListView(generic.ListView):
         cur_user = User.objects.get(username=user_info.username, email=user_info.email)
         return cur_user.course_set.all()
 
+@method_decorator(login_required, name='dispatch') # have to do this for classes
 class CourseDetailView(generic.DetailView):
     model = Course
 
@@ -33,6 +36,8 @@ class CourseDetailView(generic.DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Course, course_name=self.kwargs.get("course_name"))
 
+
+@method_decorator(login_required, name='dispatch') # have to do this for classes
 class CourseFormView(generic.FormView):
     template_name = 'course/course_form.html'
     form_class = CourseForm
@@ -55,6 +60,7 @@ class CourseFormView(generic.FormView):
         return HttpResponseRedirect(reverse('course:list'))
 
 
+@login_required
 def DocumentFormView(request, course_name):
     message = 'Upload Notes!'
     course = Course.objects.get(course_name=course_name)

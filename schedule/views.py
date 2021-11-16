@@ -8,10 +8,16 @@ from course.models import Course
 
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 
+
+
+
+@login_required # requires login before viewing
 def index(request):
     return render(request, 'schedule/index.html')
 
+@method_decorator(login_required, name='dispatch') # have to do this for classes
 class IndexView(generic.ListView):
     template_name = 'schedule/index.html'
     context_object_name = 'latest_question_list'
@@ -20,11 +26,14 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Assignment.objects.filter(user_id=self.request.user.id).order_by('-due_date').reverse()[:5]
 
+@login_required # requires login before viewing
 def assignment_form(request): # make sure it's linked with users
     return render(request, 'schedule/assignment_form.html',
     {'course_list': Course.objects.filter(users=request.user).values().order_by('course_name')})
     # filters by users and orders by course name
 
+
+@method_decorator(login_required, name='dispatch') # have to do this for classes
 class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
@@ -32,6 +41,7 @@ class AssignmentListView(generic.ListView):
         order = self.request.GET.get('sort', 'title')
         return Assignment.objects.filter(user_id=self.request.user.id).order_by(order)
 
+@login_required # requires login before viewing
 def create_assignment(request):
     if (request.method == 'POST'):
         course = Course.objects.get(course_name=request.POST["course"])
@@ -56,6 +66,7 @@ def create_assignment(request):
         )
     return HttpResponseRedirect(reverse('schedule:assignment_list'))
 
+@login_required # requires login before viewing
 def delete_assignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     assignment.delete()

@@ -6,6 +6,8 @@
       <p>Feel free to use it to schedule your assignments as well as other events!</p>
     </div>
   </section>
+
+  <section>
   <h5> These are your next 5 assignments due! </h5>
   <table class="table">
     <thead>
@@ -16,13 +18,15 @@
       </tr>
     </thead>
     <tbody>
+        <tr>
         {% for assignment in latest_question_list %}
           <td>{{ assignment.course }} </td>
           <td>{{ assignment.title }}</td>
           <td>{{ assignment.due_date}}</td>
-        </tr>  
-        {% endfor %}   
+        </tr>
+        {% endfor %}
     </tbody>
   </table>
-</section>
+  </section>
+
 {% endblock %}
