@@ -1,0 +1,11 @@
+{% extends 'schedule/layout.html' %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'schedule/calendar_style.css' %}">
+<div class="clearfix">
+	<a class="btn btn-info left" href="{% url 'schedule:calendar' prev_month.0 prev_month.1 %}"> {{ prev_month }} </a>
+	<a class="btn btn-info right" href="{% url 'schedule:calendar' next_month.0 next_month.1 %}"> {{ next_month }} </a>
+</div>
+{{ calendar }}
+{% endblock %}
