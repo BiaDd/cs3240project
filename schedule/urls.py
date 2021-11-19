@@ -22,6 +22,7 @@ urlpatterns = [
     #path('calendar/', views.redirect_calendar, name='calendar'),
 
     #maybe write as regular def?
+    # path to calendar takes in year and month
     path('calendar/<int:year>/<int:month>/', views.CalendarView, name='calendar'),
     #re_path(r'^calendar/$', views.CalendarView.as_view(), name='calendar'),
 

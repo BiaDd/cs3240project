@@ -34,6 +34,8 @@ from .utils import Calendar
 import calendar
 
 
+# calendar creation view
+@login_required # requires login before viewing
 def CalendarView(request, year, month):
 
     # filter assignments by users
@@ -53,26 +55,27 @@ def CalendarView(request, year, month):
                   {'calendar': mark_safe(html_cal), 'prev_month': prev_month(d), 'next_month': next_month(d)})
 
 
+# this is just for when user clicks on calendar button on navbar
+@login_required # requires login before viewing
 def CalendarRedirect(request):
     d = datetime.today()
     return redirect(str(d.year) + '/' + str(d.month)+ '/')
 
+# gets the date based on year and month and formats it
 def get_date(year, month):
     if year and month:
         return date(year, month, day=1)
     return datetime.today()
 
+# gets the previous month,
 def prev_month(d):
-    # get the prev month -1
-    # make a 2 element tuple for (month and year)
-    # if current month = 1, prev year == thisyear - 1
     first = d.replace(day=1)
     prev_month = first - timedelta(days=1)
     month = (prev_month.year, prev_month.month)
     return month
 
+# returns next month and the year it comes with
 def next_month(d):
-    # get the next month +1
     days_in_month = calendar.monthrange(d.year, d.month)[1]
     last = d.replace(day=days_in_month)
     next_month = last + timedelta(days=1)
