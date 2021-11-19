@@ -148,7 +148,7 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 9
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/schedule'
 LOGOUT_REDIRECT_URL = '/'
 
 # Internationalization
