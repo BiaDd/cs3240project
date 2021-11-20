@@ -1,0 +1,12 @@
+{% extends 'schedule/layout.html' %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'schedule/calendar_style.css' %}">
+<div class="clearfix">
+	<!-- Buttons go to next month, takes in year param and month param-->
+	<a class="btn btn-info left" href="{% url 'schedule:calendar' prev_month.0 prev_month.1 %}"> Previous Month</a>
+	<a class="btn btn-info right" href="{% url 'schedule:calendar' next_month.0 next_month.1 %}"> Next Month </a>
+</div>
+{{ calendar }}
+{% endblock %}

@@ -1,16 +1,88 @@
-from django.shortcuts import render, get_object_or_404
+"""
+/*
+
+*  REFERENCES
+*  Title: <HOW TO CREATE A CALENDAR USING DJANGO>
+*  Author: <Hui Wen>
+*  Date: <11/17/2021>
+*  Code version: <N/A>
+*  URL: <https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html>
+*  Software License: <N/A>
+*
+
+*/
+
+"""
+
+
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from .models import Assignment
 from course.models import Course
+from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 
 
+from datetime import datetime, timedelta, date
+from django.utils.safestring import mark_safe
+from .utils import Calendar
+import calendar
+
+
+# calendar creation view
+@login_required # requires login before viewing
+def CalendarView(request, year, month):
+
+    # filter assignments by users
+    assignments = Assignment.objects.filter(user_id=request.user.id)
+    # use today's date for the calendar
+    #d = get_date(request.GET.get('day', None))
+    # Instantiate our calendar class with today's year and date
+    cal = Calendar(year, month)
+    # Call the formatmonth method, which returns our calendar as a table
+    html_cal = cal.formatmonth(assignments, withyear=True) # pass list of assignments in
+
+    #get month
+    d = get_date(year, month)
+    # prev_month =
+
+    return render(request, 'schedule/calendar.html',
+                  {'calendar': mark_safe(html_cal), 'prev_month': prev_month(d), 'next_month': next_month(d)})
+
+
+# this is just for when user clicks on calendar button on navbar
+@login_required # requires login before viewing
+def CalendarRedirect(request):
+    d = datetime.today()
+    return redirect(str(d.year) + '/' + str(d.month)+ '/')
+
+# gets the date based on year and month and formats it
+def get_date(year, month):
+    if year and month:
+        return date(year, month, day=1)
+    return datetime.today()
+
+# gets the previous month,
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = (prev_month.year, prev_month.month)
+    return month
+
+# returns next month and the year it comes with
+def next_month(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = (next_month.year, next_month.month)
+    return month
+
+#--------------------------------------------------------
 
 
 @login_required # requires login before viewing
