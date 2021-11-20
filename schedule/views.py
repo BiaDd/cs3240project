@@ -123,6 +123,7 @@ def create_assignment(request):
         if (not course or not title or not desc or not due_date):
             return render(request, 'schedule/assignment_form.html', {
                 'error_message': "Please fill out the text boxes.",
+                'course_list': Course.objects.filter(users=request.user).values().order_by('course_name')
             })
         if (len(title) > 200):
             return render(request, 'schedule/assignment_form.html', {
