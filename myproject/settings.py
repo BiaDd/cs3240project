@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'z2^_dpbpn(jm=5u5*$j(5!u(upz*)uhth&6*j^(#6t&d0=lz3p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
@@ -52,6 +52,13 @@ INSTALLED_APPS = [
     'storages'
 ]
 
+# security settings
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
