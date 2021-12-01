@@ -55,7 +55,9 @@ INSTALLED_APPS = [
 # security settings
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+# if you getting a error on local host set secure SSL to False and clear cookies in browser
 SECURE_SSL_REDIRECT = True
+
 SECURE_HSTS_SECONDS = 16000000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
