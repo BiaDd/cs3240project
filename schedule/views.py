@@ -111,7 +111,7 @@ class AssignmentListView(generic.ListView):
     context_object_name = 'assignment_list'
     def get_queryset(self):
         order = self.request.GET.get('sort', 'title')
-        if(order == 'course'):
+        if(order == course):
             order = order.course_name
         return Assignment.objects.filter(user_id=self.request.user.id).order_by(order)
 
