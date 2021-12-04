@@ -110,7 +110,7 @@ class AssignmentListView(generic.ListView):
     template_name = 'schedule/assignment_list.html'
     context_object_name = 'assignment_list'
     def get_queryset(self):
-        order = self.request.GET.get('sort', 'course')
+        order = self.request.GET.get('sort', 'due_date')
         if(order == 'course'):
             return Assignment.objects.filter(user_id=self.request.user.id).order_by('course__course_name')
         return list(Assignment.objects.filter(user_id=self.request.user.id).order_by(order))
