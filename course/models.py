@@ -6,7 +6,7 @@ import os
 
 
 class Course(models.Model):
-    course_name = models.CharField(max_length=200, default="class")
+    course_name = models.CharField(max_length=200)
     users = models.ManyToManyField(User)
 
     def __str__(self):
