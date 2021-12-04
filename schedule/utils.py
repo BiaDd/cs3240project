@@ -31,7 +31,7 @@ class Calendar(HTMLCalendar): # references python HTML Calendar
 		assignments_per_day = assign.filter(due_date__day=day) # get assignments by day they're due
 		d = ''
 		for a in assignments_per_day: # put assignments in the day
-			d += f'<a href="#" title="{a.description}"> {a.title} </a>' # description of assignment when hover over
+			d += f'<a href="#" data-bs-toggle="modal" data-bs-target="#calendarModal" title="{a.description}"> {a.title} </a>' # description of assignment when hover over
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"

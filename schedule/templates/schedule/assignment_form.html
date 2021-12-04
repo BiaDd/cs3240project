@@ -21,14 +21,12 @@
           </div>
         {% endif %}
 
-
-        <select id="course" name="course" class="form-select" aria-label=".form-select-sm example" >
-
+        <label for="course">Select a course: </label>
+        <select id="course" name="course" class="form-select" aria-label=".form-select-sm example" style="width:auto;" >
           {% for course in course_list %}
             <option value="{{ course.course_name }}" data-type="{{ course.course_name }}">{{ course.course_name }}</option>
           {% endfor %}
         </select>
-
 
 
         <label for="title">Assignment Title: </label>

@@ -9,7 +9,9 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Enrolled Courses</th>
+            <th>Enrolled Courses
+              <a href="{% url 'course:form' %}" class="btn btn-primary">Add a new course</a>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +28,7 @@
           {% endif %}
         </tbody>
       </table>
-      <a href="{% url 'course:form' %}" class="btn btn-primary">Add a new course</a>
+
     </div>
   </section>
 {% endblock %}

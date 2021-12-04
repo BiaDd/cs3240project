@@ -6,6 +6,24 @@
       <h1>{{ course.course_name }}</h1>
     </div>
     <div class="p-5">
+      <div class="mt-5">
+        {% if user in course.users.all %}
+        <a href="{% url 'course:upload' course_name=course.course_name %}"
+           class="btn btn-primary">
+          Upload a new document
+        </a>
+        {% else %}
+        <!-- I'm trying to make this join course button that enrolls a user into a course
+        when they click it. DID IT -->
+        <form action="{% url 'course:form' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" value="{{ course.course_name }}" name="course_name">
+          <input type="submit" value="Join Course" class="btn btn-primary" >
+        </form>
+        {% endif %}
+        <a href="{% url 'course:list' %}" class="btn btn-warning">return to list</a>
+      </div>
+
       <h4>Assignments</h4>
       {% if assignments %}
         <ul class="list-group list-group-flush mx-5 my-3 w-50">
@@ -31,24 +49,13 @@
       {% if documents %}
         <ul class="list-group mx-5 my-3 w-50">
           {% for doc in documents %}
-            <li class="list-group-item"><a href="{{ doc.docfile.url }}">{{ doc.filename }}</a></li>
+            <li class="list-group-item"><a href="{{ doc.docfile.url }}" target="_blank" rel="noopener noreferrer">{{ doc.filename }}</a></li>
           {% endfor %}
         </ul>
       {% else %}
         <p>No document in this course</p>
       {% endif %}
 
-
-
-      <div class="mt-5">
-        {% if user in course.users.all %}
-        <a href="{% url 'course:upload' course_name=course.course_name %}"
-           class="btn btn-primary">
-          Upload a new document
-        </a>
-        {% endif %}
-        <a href="{% url 'course:list' %}" class="btn btn-warning">return to list</a>
-      </div>
     </div>
   </section>
 {% endblock %}
