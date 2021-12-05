@@ -1,9 +1,12 @@
 {% extends 'schedule/layout.html' %}
 <!-- Page for assignment lists, maybe add a sort feature later on-->
 
+
 {% block content %}
+<div class="bg"></div>
+<div class="content">
   <section>
-    <div class="container-fluid p-3 bg-dark text-white text-center">
+    <div class="container-fluid p-3 bg-dark bg-gradient text-white text-center">
       <h1>Assignments</h1>
       <p>These are all your assignments</p>
     </div>
@@ -49,14 +52,16 @@
           
         {% endif %}
         
-        <a href="{% url 'schedule:assignment_form' %}" class='btn mr-1' style='background-color:beige'>Create a new assignment</a>
-        <a href="{% url 'schedule:assignment_list' %}?sort=due_date" class='btn mr-1' style='background-color:DodgerBlue'> Sort by Due Date</a>
-        <a href="{% url 'schedule:assignment_list' %}?sort=date_created" class='btn mr-1' style='background-color:Tomato'> Sort by Date Created</a>
-        <a href="{% url 'schedule:assignment_list' %}?sort=description" class='btn mr-1' style='background-color:Orange'> Sort by Description</a>
-        <a href="{% url 'schedule:assignment_list' %}?sort=title" class='btn mr-1' style='background-color:rgb(58, 218, 72)'> Sort by Title</a>
-        <a href="{% url 'schedule:assignment_list' %}?sort=course" class='btn mr-1' style='background-color:rgb(236, 125, 231)'> Sort by Course</a>
+        <a href="{% url 'schedule:assignment_form' %}" class='btn ca'><i class="bi bi-journal-plus"></i> Create a new assignment</a>
+        <a href="{% url 'schedule:assignment_list' %}?sort=due_date" class='btn dd' style=''> Sort by Due Date</a>
+        <a href="{% url 'schedule:assignment_list' %}?sort=date_created" class='btn dc' style=''> Sort by Date Created</a>
+        <a href="{% url 'schedule:assignment_list' %}?sort=description" class='btn ds' style=''> Sort by Description</a>
+        <a href="{% url 'schedule:assignment_list' %}?sort=title" class='btn st' style=''> Sort by Title</a>
+        <a href="{% url 'schedule:assignment_list' %}?sort=course" class='btn sc' style=''> Sort by Course</a>
 
       </tbody>
     </table>
   </section>
+</div>
+
 {% endblock %}

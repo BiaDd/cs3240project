@@ -1,6 +1,7 @@
 {% extends "schedule/layout.html" %}
 {% block content %}
 {% load static %}
+{% load socialaccount %}
 <!--
 *  REFERENCES
 *  Title: <Sliding Diagonals Background Effect>
@@ -24,7 +25,8 @@
     <div class="content">
     <h1>Cavalier Calendar</h1>
         <div>
-        <p>Sign up or click Login to start organizing</p>
+        <p>Organization, the Cavalier way</p>
+        <a class="btn button btn-info {% if '/account' in request.path %} active {% endif %}" href="{% provider_login_url 'google' %}"><i class="bi bi-google"></i> Login With Google </a>
         </div>
     </div>
 

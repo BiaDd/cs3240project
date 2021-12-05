@@ -14,12 +14,14 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% bootstrap_messages %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'schedule/base.css' %}">
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'schedule:index' %}" style="color:Green">Workspace</a>
+          <a class="navbar-brand" href="{% url 'schedule:index' %}" style="color:Green"><i class="bi bi-journal-text"></i> Organizer </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Navigation Toggler" >
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -108,9 +110,10 @@
 
     {% block content %}
 
+
     {% endblock %}
     <div>
-      <footer class="page-footer font-small blue pt-4 text-center fixed-bottom">
+      <footer class="page-footer font-small blue text-center">
       <p>Copyright &copy; 2021 A-22</p>
       </footer>
     </div>
