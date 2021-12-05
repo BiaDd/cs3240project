@@ -20,7 +20,7 @@ class CourseTestCase(TestCase):
 
         course_list = self.user.course_set.values_list('course_name', flat=True)
         self.assertSequenceEqual(course_list, ['STS1500', 'CS3240', 'DRACULA'])
-    """
+
     def test_course_list(self):
         self.client.post('/course/form/', data={'course_name':'sts1500'})
         self.client.post('/course/form/', data={'course_name':'cs3240'})
@@ -40,7 +40,7 @@ class CourseTestCase(TestCase):
         response = self.client.get('/course/STS1500/')
         self.assertContains(response, 'test')
         self.assertContains(response, 'other')
-    """
+
     def test_signup_course(self):
         Course.objects.create(course_name='cs3240')
         old_len = len(Course.objects.all())

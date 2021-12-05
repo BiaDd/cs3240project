@@ -3,7 +3,7 @@
 import os
 import sys
 from django.conf import settings
-
+from pathlib import Path
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
@@ -18,6 +18,12 @@ def main():
     # Disable HTTPS redirects while testing with Django's HTTP test client.
     if len(sys.argv) > 1 and sys.argv[1] == "test":
         settings.SECURE_SSL_REDIRECT = False
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        settings.STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        settings.STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        settings.STATIC_URL = '/static/'
+
     execute_from_command_line(sys.argv)
 
 
