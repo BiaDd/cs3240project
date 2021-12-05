@@ -4,7 +4,6 @@ from .models import Course, Document
 from .forms import DocumentForm
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from schedule.static import *
 
 
