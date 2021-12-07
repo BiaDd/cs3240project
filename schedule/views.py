@@ -34,6 +34,7 @@ from .utils import Calendar
 import calendar
 
 
+# from here to the #----------- line referenced Hui Wen's calendar creation tutorial
 # calendar creation view
 @login_required # requires login before viewing
 def CalendarView(request, year, month):
@@ -82,7 +83,7 @@ def next_month(d):
     month = (next_month.year, next_month.month)
     return month
 
-#--------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
 
 
 @login_required # requires login before viewing
