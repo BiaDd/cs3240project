@@ -20,6 +20,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 *  Software License: <N/A>
 *
 
+*  Title: <How to Setup Amazon S3 in a Django Project>
+*  Author: <Vitor Freitas>
+*  Date: <11/12/2021>
+*  Code version: <N/A>
+*  URL: <https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html>
+*  Software License: <BSD-3>
+*
+
+
+
 */
 
 """
