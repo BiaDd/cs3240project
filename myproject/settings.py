@@ -28,8 +28,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 *  Software License: <BSD-3>
 *
 
-
-
 */
 
 """
