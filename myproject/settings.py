@@ -192,7 +192,7 @@ AUTHENTICATION_BACKENDS = [
 # This value can vary by local setup
 #SITE_ID = 8 # this one works locally for me -dan
 
-SITE_ID = 9
+SITE_ID = 3
 
 LOGIN_REDIRECT_URL = '/schedule'
 LOGOUT_REDIRECT_URL = '/'
