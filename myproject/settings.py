@@ -49,7 +49,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'z2^_dpbpn(jm=5u5*$j(5!u(upz*)uhth&6*j^(#6t&d0=lz3p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
@@ -84,7 +84,7 @@ INSTALLED_APPS = [
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 # if you getting a error on local host set secure SSL to False and clear cookies in browser
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 SECURE_HSTS_SECONDS = 16000000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -127,7 +127,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-"""
+
 # local posgresql configuration
 DATABASES = {
     'default': {
@@ -141,15 +141,15 @@ DATABASES = {
 }
 
 db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)"""
+DATABASES['default'].update(db_from_env)
 
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3')),
     }
-}
+}"""
 
 
 # Password validation
